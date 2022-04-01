@@ -1,30 +1,30 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import auth from '@react-native-firebase/auth';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/Ionicons';
+// import auth from '@react-native-firebase/auth';
 
-import PrimaryButton from '~components/Button/PrimaryButton';
+import Container from '~components/Container';
+import Home from '~containers/Home';
+import Fab from '~components/Button/Fab';
+import colors from '~theme/colors';
 
 const HomeScreen = () => {
-  const handleLogout = async () => {
-    await auth()
-      .signOut()
-      .then(() => console.log('User signed out!'));
-  };
+  // const handleLogout = async () => {
+  //   await auth()
+  //     .signOut()
+  //     .then(() => console.log('User signed out!'));
+  // };
 
   return (
-    <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <PrimaryButton onPress={handleLogout}>Logout</PrimaryButton>
-    </View>
+    <SafeAreaView>
+      <Container>
+        <Home />
+      </Container>
+      <Fab>
+        <Icon name='add-sharp' size={24} color={colors.primaryWhite} />
+      </Fab>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default HomeScreen;

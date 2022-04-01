@@ -8,6 +8,8 @@ import HomeScreen from '~screens/Home';
 import colors from '~theme/colors';
 import SignUpScreen from '~screens/SignUp';
 import LoadingScreen from '~screens/Loading';
+import HomeHeader from '~components/Header/HomeHeader';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -26,29 +28,36 @@ const Navigation = () => {
       <Stack.Navigator
         screenOptions={{
           headerStyle: {
-            backgroundColor: colors.primary,
+            backgroundColor: colors.primaryWhite,
           },
-          headerTintColor: colors.primaryWhite,
+          headerTintColor: colors.d1,
           headerTitleStyle: {
             fontWeight: 'bold',
             fontSize: 24,
           },
+          headerShadowVisible: false,
         }}
       >
         {isLoading ? (
-          <Stack.Screen name="Loading" component={LoadingScreen} />
+          <Stack.Screen name='Loading' component={LoadingScreen} />
         ) : isAuthenticated && !isLoading ? (
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen
+            name='Home'
+            component={HomeScreen}
+            options={{
+              headerTitle: props => <HomeHeader {...props} title='Notes' />,
+            }}
+          />
         ) : (
           <>
             <Stack.Screen
               options={{ headerShown: false }}
-              name="Login"
+              name='Login'
               component={LoginScreen}
             />
             <Stack.Screen
               options={{ headerShown: false }}
-              name="SignUp"
+              name='SignUp'
               component={SignUpScreen}
             />
           </>

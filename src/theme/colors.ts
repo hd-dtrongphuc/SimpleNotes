@@ -8,4 +8,5 @@ export default {
   g2: '#919191',
   d1: 'rgb(38, 38, 38)',
   r1: '#FD1D1D',
+  d2: '#4f4f4f',
 };

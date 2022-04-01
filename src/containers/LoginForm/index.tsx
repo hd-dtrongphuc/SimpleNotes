@@ -78,12 +78,12 @@ const LoginForm = () => {
       <FormProvider {...formMethods}>
         <FormInput
           name={LOGIN_FIELDS.email}
-          placeholder="Email"
+          placeholder='Email'
           onSubmitEditing={() => passwordRef.current?.focus()}
         />
         <FormInput
           name={LOGIN_FIELDS.password}
-          placeholder="Password"
+          placeholder='Password'
           secureTextEntry={true}
           ref={passwordRef}
         />
@@ -92,7 +92,8 @@ const LoginForm = () => {
       <PrimaryButton
         disabled={isButtonDisabled}
         onPress={formMethods.handleSubmit(handleSubmit)}
-        isLoading={isLoading}>
+        isLoading={isLoading}
+      >
         Login
       </PrimaryButton>
       <View style={[styles.horizontal, styles.gapTop, styles.gapBottom]}>
@@ -102,14 +103,16 @@ const LoginForm = () => {
       </View>
       <PrimaryButton
         onPress={onGoogleButtonPress}
-        isLoading={isSignInWithGoogleLoading}>
+        isLoading={isSignInWithGoogleLoading}
+      >
         Login with Google
       </PrimaryButton>
       <View style={styles.footer}>
         <Text
           style={{
             color: colors.d1,
-          }}>
+          }}
+        >
           {"Don't have an account?"}
         </Text>
         <Text
@@ -117,7 +120,8 @@ const LoginForm = () => {
             color: colors.primary,
             marginLeft: 4,
           }}
-          onPress={() => navigation.navigate('SignUp')}>
+          onPress={() => navigation.navigate('SignUp')}
+        >
           Sign Up.
         </Text>
       </View>

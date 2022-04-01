@@ -28,7 +28,7 @@ const ButtonOpacity: React.FC<Props> = ({
       {!isLoading ? (
         children
       ) : (
-        <ActivityIndicator size="small" color={colors.primaryWhite} />
+        <ActivityIndicator size='small' color={colors.primaryWhite} />
       )}
     </TouchableOpacity>
   );

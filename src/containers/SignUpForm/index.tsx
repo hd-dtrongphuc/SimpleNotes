@@ -71,19 +71,19 @@ const SignUpForm = () => {
       <FormProvider {...formMethods}>
         <FormInput
           name={LOGIN_FIELDS.email}
-          placeholder="Email"
+          placeholder='Email'
           onSubmitEditing={() => passwordRef.current?.focus()}
         />
         <FormInput
           name={LOGIN_FIELDS.password}
-          placeholder="Password"
+          placeholder='Password'
           secureTextEntry={true}
           onSubmitEditing={() => passwordConfirmRef.current?.focus()}
           ref={passwordRef}
         />
         <FormInput
           name={LOGIN_FIELDS.passwordConfirm}
-          placeholder="Confirm password"
+          placeholder='Confirm password'
           secureTextEntry={true}
           ref={passwordConfirmRef}
         />
@@ -93,14 +93,16 @@ const SignUpForm = () => {
         style={styles.gapBottom}
         disabled={isButtonDisabled}
         onPress={formMethods.handleSubmit(handleSubmit)}
-        isLoading={isLoading}>
+        isLoading={isLoading}
+      >
         Sign up
       </PrimaryButton>
       <View style={styles.footer}>
         <Text
           style={{
             color: colors.d1,
-          }}>
+          }}
+        >
           Do you have an account?
         </Text>
         <Text
@@ -108,7 +110,8 @@ const SignUpForm = () => {
             color: colors.primary,
             marginLeft: 4,
           }}
-          onPress={() => navigation.navigate('Login')}>
+          onPress={() => navigation.navigate('Login')}
+        >
           Login.
         </Text>
       </View>
