@@ -1,12 +1,18 @@
 import React, { forwardRef } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { TextInput, TextInputProps } from 'react-native';
+import { TextInput, TextInputProps, ViewStyle, TextStyle } from 'react-native';
 
 import Input from './Input';
 
 interface Props extends TextInputProps {
   name: string;
   label?: string;
+  styles?: {
+    wrapper?: ViewStyle;
+    label?: TextStyle;
+    input?: TextStyle;
+    error?: TextStyle;
+  };
 }
 
 const FormInput = forwardRef<TextInput, Props>(

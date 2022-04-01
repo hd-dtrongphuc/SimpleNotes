@@ -24,21 +24,24 @@ interface Props extends TextInputProps {
 
 const Input = forwardRef<TextInput, Props>(
   ({ label, error, styles, ...inputProps }, ref) => {
-    const fullStyles = { ...defaultStyles, ...(styles ?? {}) };
-
     return (
-      <View style={fullStyles.wrapper}>
-        {label && <Text style={fullStyles.label}>{label}</Text>}
+      <View style={[defaultStyles.wrapper, styles?.wrapper]}>
+        {label && (
+          <Text style={[defaultStyles.label, styles?.label]}>{label}</Text>
+        )}
         <TextInput
           style={[
-            fullStyles.input,
+            defaultStyles.input,
             error ? { borderColor: colors.r1, borderWidth: 1.5 } : {},
+            styles?.input,
           ]}
           placeholderTextColor={colors.g2}
           ref={ref}
           {...inputProps}
         />
-        {error && <Text style={fullStyles.error}>{error}</Text>}
+        {error && (
+          <Text style={[defaultStyles.error, styles?.error]}>{error}</Text>
+        )}
       </View>
     );
   },

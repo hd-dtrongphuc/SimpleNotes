@@ -43,6 +43,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'transparent',
+    borderStyle: 'solid',
   },
   disabled: {
     backgroundColor: colors.primaryDisabled,

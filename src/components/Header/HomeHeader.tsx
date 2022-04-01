@@ -1,5 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import auth from '@react-native-firebase/auth';
+
 import colors from '~theme/colors';
 
 interface Props {
@@ -7,9 +10,18 @@ interface Props {
 }
 
 const HomeHeader: React.FC<Props> = ({ title }) => {
+  const handleLogout = async () => {
+    await auth()
+      .signOut()
+      .then(() => console.log('User signed out!'));
+  };
+
   return (
     <View style={styles.wrapper}>
       <Text style={styles.title}>{title}</Text>
+      <Pressable style={styles.user} onPress={handleLogout}>
+        <Icon name='exit-outline' color={colors.primary} size={24} />
+      </Pressable>
     </View>
   );
 };
@@ -29,6 +41,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: colors.d1,
+  },
+  user: {
+    marginRight: 32,
   },
 });
 
