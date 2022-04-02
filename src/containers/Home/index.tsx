@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useAuthContext } from '~contexts/authContext';
 import colors from '~theme/colors';
+import FolderList from './components/FolderList';
 
-import NoteList from './components/NoteList';
 import Search from './components/Search';
 
 const Home = () => {
@@ -16,7 +16,8 @@ const Home = () => {
         <Text style={styles.text}>Welcome, </Text>
         <Text style={styles.user}>{user?.email}</Text>
       </View>
-      <NoteList />
+      <FolderList />
+      {/* <NoteList /> */}
     </View>
   );
 };
