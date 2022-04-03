@@ -13,6 +13,11 @@ export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
   Loading: undefined;
+  Folder: FolderScreenProps;
+};
+
+export type FolderScreenProps = {
+  id: string;
 };
 
 export const RootStack = createNativeStackNavigator<RootStackParamList>();
@@ -31,8 +36,10 @@ const Navigation = () => {
           headerTitleStyle: {
             fontWeight: 'bold',
             fontSize: 24,
+            color: colors.d1,
           },
           headerShadowVisible: false,
+          headerTitleAlign: 'center',
         }}
       >
         {isLoading ? (

@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  NativeSyntheticEvent,
+  StyleSheet,
+  TextInputKeyPressEventData,
+  TextInputSubmitEditingEventData,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import colors from '~theme/colors';
+import TaskInput from './TaskInput';
 
 interface Props {
   name: string;
   value?: boolean;
-  onChange?: (state: CheckboxState) => any;
-  label: string;
+  onChange?: (state: CheckboxState) => unknown;
+  editable?: boolean;
 }
 
 interface CheckboxState {
@@ -16,12 +24,7 @@ interface CheckboxState {
   value: boolean;
 }
 
-const TaskItem: React.FC<Props> = ({
-  value = false,
-  onChange,
-  label,
-  name,
-}) => {
+const TaskItem: React.FC<Props> = ({ value = false, onChange, name }) => {
   const [checked, setChecked] = useState<boolean>(value);
 
   useEffect(() => {
@@ -37,6 +40,12 @@ const TaskItem: React.FC<Props> = ({
     setChecked(!checked);
   };
 
+  const handleSubmitEditing = (
+    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
+  ) => {
+    console.log('submit');
+  };
+
   return (
     <TouchableOpacity style={styles.touchArea} onPress={handlePress}>
       <View style={styles.container}>
@@ -49,12 +58,11 @@ const TaskItem: React.FC<Props> = ({
             />
           )}
         </View>
-        <Text
-          style={[styles.label, checked && styles.stroke]}
-          numberOfLines={1}
-        >
-          {label}
-        </Text>
+        <TaskInput
+          name={name}
+          checked={checked}
+          onSubmitEditing={handleSubmitEditing}
+        />
       </View>
     </TouchableOpacity>
   );

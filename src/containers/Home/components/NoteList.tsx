@@ -1,43 +1,67 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { Col, Grid, Row } from 'react-native-easy-grid';
+import { FormProvider, useFieldArray } from 'react-hook-form';
+import { FlatList, ScrollView, StyleSheet } from 'react-native';
+import * as yup from 'yup';
 
-import NoteCard from './NoteCard';
+import TaskItem from '~components/TaskItem';
+import useFormProvider from '~hooks/useFormProvider';
+
+const enum NOTE_FIELD {
+  NOTES = 'notes',
+  ID = 'id',
+  VALUE = 'value',
+}
+
+interface NoteItem {
+  [NOTE_FIELD.ID]: string;
+  [NOTE_FIELD.VALUE]: string;
+}
+
+interface FormValues {
+  [NOTE_FIELD.NOTES]: NoteItem[];
+}
+
+const validationSchema = yup.object({
+  // content: yup.string().required('Content is required'),
+});
+
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    value: 'Notes',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    value: 'Today',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    value: 'Tomorrow',
+  },
+];
 
 const NoteList = () => {
+  const formMethods = useFormProvider<FormValues>({
+    validationSchema,
+    defaultValues: {
+      [NOTE_FIELD.NOTES]: DATA,
+    },
+  });
+
+  const { fields } = useFieldArray({
+    name: 'notes',
+    control: formMethods.control,
+  });
+
+  const renderItem = ({ item, index }: any) => (
+    <TaskItem name={`notes.${index}.value`} />
+  );
+
   return (
-    <ScrollView style={styles.container}>
-      <Grid>
-        <Col style={{ marginRight: 8 }}>
-          {Array.from(Array(10)).map((_, i) => {
-            return (
-              <Row key={i} style={styles.row}>
-                <NoteCard height={i % 2 === 0 ? 300 : 80} />
-              </Row>
-            );
-          })}
-        </Col>
-        <Col style={{ marginLeft: 8 }}>
-          {Array.from(Array(10)).map((_, i) => {
-            return (
-              <Row key={i} style={styles.row}>
-                <NoteCard height={i % 2 !== 0 ? 200 : 100} />
-              </Row>
-            );
-          })}
-        </Col>
-      </Grid>
-    </ScrollView>
+    <FormProvider {...formMethods}>
+      <FlatList data={fields} renderItem={renderItem} />
+    </FormProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  row: {
-    marginVertical: 8,
-  },
-  container: {
-    paddingBottom: 20,
-  },
-});
 
 export default NoteList;

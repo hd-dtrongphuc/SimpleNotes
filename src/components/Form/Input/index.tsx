@@ -53,19 +53,18 @@ const defaultStyles = StyleSheet.create({
     color: colors.primaryWhite,
   },
   wrapper: {
-    width: '100%',
     marginBottom: 12,
+    flexGrow: 1,
   },
   input: {
     backgroundColor: colors.secondary,
-    width: '100%',
-    height: 40,
     borderRadius: 4,
     paddingHorizontal: 16,
     fontSize: 14,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: colors.g1,
+    lineHeight: 24,
   },
   error: {
     color: colors.r1,

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { FlatList } from 'react-native';
 
@@ -22,8 +23,19 @@ const DATA = [
 ];
 
 const FolderList = () => {
+  const navigation = useNavigation();
+
+  const onPress = (id: string) =>
+    navigation.navigate('Folder', {
+      id,
+    });
+
   const renderItem = ({ item }: any) => (
-    <CardLine label={item.label} total={item.total} />
+    <CardLine
+      label={item.label}
+      total={item.total}
+      onPress={() => onPress(item.id)}
+    />
   );
 
   return (

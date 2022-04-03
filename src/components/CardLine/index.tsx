@@ -15,13 +15,14 @@ interface Props {
   label: string;
   total?: number;
   imageSource?: string;
+  onPress?: () => void;
 }
 
-const CardLine: React.FC<Props> = ({ label, total, imageSource }) => {
+const CardLine: React.FC<Props> = ({ label, total, imageSource, onPress }) => {
   return (
     <TouchableHighlight
       style={styles.touchable}
-      onPress={() => console.log('click')}
+      onPress={onPress}
       underlayColor={colors.g1}
       activeOpacity={0.8}
     >

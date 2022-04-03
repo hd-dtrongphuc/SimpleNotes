@@ -1,8 +1,26 @@
+import { RouteProp, useRoute } from '@react-navigation/native';
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import Container from '~components/Container';
+import NoteForm from '~containers/NoteForm';
+import { RootStackParamList } from '~navigation';
 
-const Folder = () => {
-  return <View></View>;
+const FolderScreen = () => {
+  const { params } = useRoute<RouteProp<RootStackParamList, 'Folder'>>();
+
+  return (
+    <Container>
+      <View style={styles.wrapper}>
+        <NoteForm id={params.id} />
+      </View>
+    </Container>
+  );
 };
 
-export default Folder;
+const styles = StyleSheet.create({
+  wrapper: {
+    paddingVertical: 16,
+  },
+});
+
+export default FolderScreen;
