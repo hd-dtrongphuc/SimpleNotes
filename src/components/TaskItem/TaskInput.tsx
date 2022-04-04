@@ -1,20 +1,13 @@
-import { StyleSheet, TextInputProps } from 'react-native';
+import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
 import React from 'react';
 
-import FormInput from '~components/Form/FormInput';
 import colors from '~theme/colors';
 
 interface Props extends TextInputProps {
-  name: string;
   checked?: boolean;
 }
 
-const TaskInput: React.FC<Props> = ({
-  name,
-  checked,
-  onKeyPress,
-  ...props
-}) => {
+const TaskInput: React.FC<Props> = ({ checked, onKeyPress, ...props }) => {
   const inputStyles = StyleSheet.create({
     input: {
       borderWidth: 0,
@@ -33,15 +26,17 @@ const TaskInput: React.FC<Props> = ({
   });
 
   return (
-    <FormInput
-      name={name}
-      styles={inputStyles}
-      multiline={true}
-      onKeyPress={onKeyPress}
-      returnKeyType='next'
-      blurOnSubmit={true}
-      {...props}
-    />
+    <View style={[inputStyles.wrapper]}>
+      <TextInput
+        style={[inputStyles.input]}
+        placeholderTextColor={colors.g2}
+        multiline={true}
+        onKeyPress={onKeyPress}
+        returnKeyType='next'
+        blurOnSubmit={true}
+        {...props}
+      />
+    </View>
   );
 };
 

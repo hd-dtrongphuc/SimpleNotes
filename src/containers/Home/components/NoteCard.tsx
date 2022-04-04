@@ -12,9 +12,9 @@ const NoteCard: React.FC<Props> = ({ height }) => {
   return (
     <View style={[styles.card, { height: height ?? 100 }]}>
       <CardTitle>Tasks</CardTitle>
-      <View>
+      {/* <View>
         <TaskItem name='' />
-      </View>
+      </View> */}
     </View>
   );
 };

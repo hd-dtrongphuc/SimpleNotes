@@ -1,9 +1,12 @@
 import React from 'react';
 import { AuthProvider } from '~contexts/authContext';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
 
 import Navigation from './navigation';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { store } from '~reducers/store';
+import { LogBox } from 'react-native';
 
 GoogleSignin.configure({
   webClientId:
@@ -13,11 +16,17 @@ GoogleSignin.configure({
 const App = () => {
   return (
     <SafeAreaProvider>
-      <AuthProvider>
-        <Navigation />
-      </AuthProvider>
+      <Provider store={store}>
+        <AuthProvider>
+          <Navigation />
+        </AuthProvider>
+      </Provider>
     </SafeAreaProvider>
   );
 };
+
+LogBox.ignoreLogs([
+  "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
+]);
 
 export default App;

@@ -65,11 +65,11 @@ const NoteForm: React.FC<Props> = ({ id }) => {
     <FormProvider {...formMethods}>
       <FormInput name={NOTE_FIELD.TITLE} placeholder='Title' />
       <Divider style={styles.divider} />
-      <View>
+      {/* <View>
         {fields.map((field, index) => (
           <TaskItem key={field.id} name={`content.${index}.value`} />
         ))}
-      </View>
+      </View> */}
     </FormProvider>
   );
 };

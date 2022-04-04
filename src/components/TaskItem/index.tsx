@@ -1,70 +1,105 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   NativeSyntheticEvent,
   StyleSheet,
-  TextInputKeyPressEventData,
   TextInputSubmitEditingEventData,
   TouchableOpacity,
   View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useDispatch } from 'react-redux';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { updateSingleNoteAction } from '~reducers/features/noteSlice';
 import colors from '~theme/colors';
 import TaskInput from './TaskInput';
+import RightSwipe from './RightSwipe';
 
 interface Props {
   name: string;
-  value?: boolean;
-  onChange?: (state: CheckboxState) => unknown;
-  editable?: boolean;
+  id: string;
+  completed?: boolean;
+  value: string;
 }
 
-interface CheckboxState {
-  name: string;
+export interface CheckboxState {
+  id: string;
   value: boolean;
 }
 
-const TaskItem: React.FC<Props> = ({ value = false, onChange, name }) => {
-  const [checked, setChecked] = useState<boolean>(value);
-
-  useEffect(() => {
-    (async () => {
-      await onChange?.({
-        name,
-        value: checked,
-      });
-    })();
-  }, [checked]);
+const TaskItem: React.FC<Props> = ({ completed = false, value, id }) => {
+  const [checked, setChecked] = useState<boolean>(completed);
+  const [text, setText] = useState<string>(value);
+  const dispatch = useDispatch();
 
   const handlePress = () => {
+    dispatch(
+      updateSingleNoteAction({
+        id,
+        completed: !checked,
+      }),
+    );
     setChecked(!checked);
   };
 
   const handleSubmitEditing = (
     e: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
   ) => {
-    console.log('submit');
+    if (e.nativeEvent.text.length > 0 && value !== e.nativeEvent.text) {
+      dispatch(
+        updateSingleNoteAction({
+          id,
+          value: e.nativeEvent.text,
+        }),
+      );
+    } else {
+      setText(text);
+    }
+  };
+
+  const handleChangeText = (text: string) => {
+    setText(text);
+  };
+
+  const handleBlur = () => {
+    if (text.length > 0 && value !== text) {
+      dispatch(
+        updateSingleNoteAction({
+          id,
+          value: text,
+        }),
+      );
+    } else {
+      setText(text);
+    }
   };
 
   return (
-    <TouchableOpacity style={styles.touchArea} onPress={handlePress}>
-      <View style={styles.container}>
-        <View style={[styles.checkbox, checked && styles.checked]}>
-          {checked && (
-            <Icon
-              name='checkmark-sharp'
-              size={12}
-              color={checked ? colors.primaryWhite : colors.d1}
+    <GestureHandlerRootView style={[styles.margin]}>
+      <Swipeable renderRightActions={RightSwipe}>
+        <TouchableOpacity onPress={handlePress}>
+          <View style={[styles.container]}>
+            <View style={[styles.checkbox, checked && styles.checked]}>
+              {checked && (
+                <Icon
+                  name='checkmark-sharp'
+                  size={12}
+                  color={checked ? colors.primaryWhite : colors.d1}
+                />
+              )}
+            </View>
+            <TaskInput
+              checked={checked}
+              onSubmitEditing={handleSubmitEditing}
+              onChangeText={handleChangeText}
+              value={text}
+              onBlur={handleBlur}
             />
-          )}
-        </View>
-        <TaskInput
-          name={name}
-          checked={checked}
-          onSubmitEditing={handleSubmitEditing}
-        />
-      </View>
-    </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      </Swipeable>
+    </GestureHandlerRootView>
   );
 };
 
@@ -94,9 +129,17 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 14,
+    borderRadius: 20,
+    backgroundColor: colors.secondary,
   },
-  touchArea: {
+  margin: {
     marginVertical: 8,
+  },
+  ignoreBorder: {
+    borderBottomRightRadius: 0,
+    borderTopRightRadius: 0,
   },
 });
 
