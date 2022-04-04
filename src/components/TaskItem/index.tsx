@@ -11,7 +11,10 @@ import { useDispatch } from 'react-redux';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { updateSingleNoteAction } from '~reducers/features/noteSlice';
+import {
+  removeSingleNoteAction,
+  updateSingleNoteAction,
+} from '~reducers/features/noteSlice';
 import colors from '~theme/colors';
 import TaskInput from './TaskInput';
 import RightSwipe from './RightSwipe';
@@ -75,9 +78,13 @@ const TaskItem: React.FC<Props> = ({ completed = false, value, id }) => {
     }
   };
 
+  const handleDelete = () => {
+    dispatch(removeSingleNoteAction(id));
+  };
+
   return (
     <GestureHandlerRootView style={[styles.margin]}>
-      <Swipeable renderRightActions={RightSwipe}>
+      <Swipeable renderRightActions={() => RightSwipe(handleDelete)}>
         <TouchableOpacity onPress={handlePress}>
           <View style={[styles.container]}>
             <View style={[styles.checkbox, checked && styles.checked]}>

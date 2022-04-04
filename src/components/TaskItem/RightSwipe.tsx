@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
-const RightSwipe = () => {
+const RightSwipe = (handleDelete: () => void) => {
   return (
-    <View
+    <TouchableOpacity
       style={{
         backgroundColor: '#ff8303',
         justifyContent: 'center',
@@ -11,6 +11,7 @@ const RightSwipe = () => {
         borderBottomRightRadius: 20,
         borderTopRightRadius: 20,
       }}
+      onPress={handleDelete}
     >
       <Text
         style={{
@@ -21,7 +22,7 @@ const RightSwipe = () => {
       >
         Delete
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

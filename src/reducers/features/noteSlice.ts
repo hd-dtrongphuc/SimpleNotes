@@ -44,15 +44,26 @@ export const noteSlice = createSlice({
 
       state.noteList[index] = updated;
     },
+    removeNote: (state, action: PayloadAction<string>) => {
+      state.noteList = state.noteList.filter(
+        note => note.id !== action.payload,
+      );
+    },
   },
 });
 
 export const addNotesAction = createAction<RawNote>('notes/add');
 export const updateSingleNoteAction =
   createAction<NoteItemUpdate>('notes/update');
+export const removeSingleNoteAction = createAction<string>('notes/remove');
 
-export const { addNotes, addNotesFailed, updateNoteList, fetchNotesAction } =
-  noteSlice.actions;
+export const {
+  addNotes,
+  addNotesFailed,
+  updateNoteList,
+  fetchNotesAction,
+  removeNote,
+} = noteSlice.actions;
 
 //selectors
 export const noteListSelector = (state: RootState) => state.notes.noteList;

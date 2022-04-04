@@ -3,12 +3,14 @@ import createSagaMiddleware from 'redux-saga';
 
 import rootSaga from './sagas';
 import noteSlice from './features/noteSlice';
+import userSlice from './features/userSlice';
 
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
     notes: noteSlice,
+    user: userSlice,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

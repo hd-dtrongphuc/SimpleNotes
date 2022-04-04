@@ -3,12 +3,14 @@ import { StyleSheet, TextInput, View } from 'react-native';
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { useDispatch } from 'react-redux';
+import { useAuthContext } from '~contexts/authContext';
 import { addNotesAction } from '~reducers/features/noteSlice';
 
 import colors from '~theme/colors';
 
 const AddNotes = () => {
   const [text, setText] = useState<string>('');
+  const { user } = useAuthContext();
   const dispatch = useDispatch();
 
   const handleTextChange = (_text: string) => {
@@ -18,6 +20,8 @@ const AddNotes = () => {
   const handleAddNotes = async () => {
     dispatch(
       addNotesAction({
+        id: +new Date(),
+        userId: user?.uid ?? `${+new Date()}`,
         value: text,
         completed: false,
       }),
